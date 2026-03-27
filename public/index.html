@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smopjes - Bestellen</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>🍲 Smopjes</h1>
+    <p id="week-label">Wekelijks menu</p>
+  </header>
+
+  <main>
+    <div id="no-menu" class="no-menu hidden">
+      <div class="icon">🗓️</div>
+      <p>Er is nog geen menu voor deze week.</p>
+      <p class="text-muted mt-8">Kom later terug!</p>
+    </div>
+
+    <div id="menu-content" class="hidden">
+      <!-- Menu overview -->
+      <div class="card">
+        <h2>Menu van de week</h2>
+        <div class="menu-overview" id="menu-overview"></div>
+      </div>
+
+      <!-- Order form -->
+      <div id="feedback" class="hidden"></div>
+
+      <div id="order-form-wrap">
+        <div class="name-section">
+          <label for="order-name">Jouw naam</label>
+          <input type="text" id="order-name" placeholder="Bijv. Jan de Vries" autocomplete="given-name">
+        </div>
+
+        <div id="days-container"></div>
+
+        <button class="btn btn-primary" id="submit-btn" onclick="submitOrder()">
+          Bestelling opslaan
+        </button>
+        <p class="text-muted mt-8" style="text-align:center;font-size:0.8rem;">
+          Je kunt je bestelling nog aanpassen door opnieuw in te sturen.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/order.js"></script>
+</body>
+</html>

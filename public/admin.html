@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smopjes - Beheer</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>⚙️ Smopjes Beheer</h1>
+    <p>Weekmenu instellen &amp; bestellingen bekijken</p>
+  </header>
+
+  <main>
+    <!-- Auth -->
+    <div class="card">
+      <h2>Toegang</h2>
+      <div class="form-group">
+        <label for="admin-password">Beheerderswachtwoord</label>
+        <input type="password" id="admin-password" placeholder="Wachtwoord" autocomplete="current-password">
+      </div>
+      <button class="btn btn-secondary" onclick="testAuth()" style="width:100%">Verbinding testen</button>
+      <div id="auth-status" class="mt-8 hidden"></div>
+    </div>
+
+    <!-- Set menu -->
+    <div class="card">
+      <h2>Menu instellen</h2>
+      <div id="menu-feedback" class="hidden"></div>
+
+      <div class="form-group">
+        <label>Weeknummer</label>
+        <div class="week-badge" id="current-week-id">laden…</div>
+      </div>
+
+      <div class="form-group">
+        <label for="soup-name">Soep (elke dag)</label>
+        <input type="text" id="soup-name" placeholder="Bijv. Tomatensoep">
+      </div>
+
+      <div class="form-group">
+        <label for="vega-name">Vega gerecht (elke dag)</label>
+        <input type="text" id="vega-name" placeholder="Bijv. Spinazie quiche">
+      </div>
+
+      <div class="form-group">
+        <label>Hoofdgerechten</label>
+        <p class="hint">Koppel elk gerecht aan de dag(en) waarop het geserveerd wordt.</p>
+      </div>
+
+      <div id="mains-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <button class="btn btn-primary mt-16" onclick="saveMenu()">
+        Menu opslaan
+      </button>
+      <p class="text-muted mt-8" style="font-size:0.8rem;text-align:center;">
+        Let op: opslaan wist de bestellingen van de huidige week.
+      </p>
+    </div>
+
+    <!-- Orders -->
+    <div class="card">
+      <h2>Bestellingen deze week</h2>
+      <button class="btn btn-secondary" onclick="loadOrders()" style="width:100%;margin-bottom:12px;">
+        Bestellingen vernieuwen
+      </button>
+      <div id="orders-feedback" class="hidden"></div>
+      <div id="orders-container" class="orders-table-wrap">
+        <p class="text-muted">Klik op "Bestellingen vernieuwen" om de lijst te laden.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
