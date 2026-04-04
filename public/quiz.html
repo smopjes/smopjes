@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD Zelftest</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .quiz-progress {
+      background: var(--border);
+      border-radius: 20px;
+      height: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .quiz-progress-bar {
+      background: var(--primary-light);
+      height: 100%;
+      border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+    .question-number {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .answer-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .answer-btn {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      width: 100%;
+    }
+    .answer-btn:hover {
+      border-color: var(--primary-light);
+      background: #f1f8e9;
+    }
+    .answer-btn.selected {
+      border-color: var(--primary);
+      background: #f1f8e9;
+      color: var(--primary-dark);
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .nav-buttons .btn {
+      flex: 1;
+      padding: 12px;
+    }
+    .result-score {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      margin: 16px 0 8px;
+    }
+    .result-label {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .result-label.low { color: #2e7d32; }
+    .result-label.medium { color: #ef6c00; }
+    .result-label.high { color: #c62828; }
+    .result-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .result-breakdown {
+      margin-top: 16px;
+    }
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .breakdown-item:last-child {
+      border-bottom: none;
+    }
+    .breakdown-bar-wrap {
+      flex: 1;
+      margin: 0 12px;
+      background: var(--border);
+      border-radius: 10px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .breakdown-bar {
+      height: 100%;
+      border-radius: 10px;
+      background: var(--primary-light);
+    }
+    .disclaimer {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.8rem;
+      color: #5d4037;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+    .category-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ADHD Zelftest</h1>
+    <p id="header-subtitle">Gebaseerd op de ASRS-v1.1 screener</p>
+  </header>
+
+  <main>
+    <!-- Intro screen -->
+    <div id="screen-intro">
+      <div class="card">
+        <h2>Wat is deze test?</h2>
+        <p style="margin-bottom:12px;">Deze zelftest is gebaseerd op de <strong>Adult ADHD Self-Report Scale (ASRS-v1.1)</strong>, ontwikkeld in samenwerking met de Wereldgezondheidsorganisatie (WHO).</p>
+        <p style="margin-bottom:12px;">De test bestaat uit <strong>18 vragen</strong> over hoe jij je de afgelopen 6 maanden hebt gevoeld en gedragen. Er zijn geen goede of foute antwoorden.</p>
+        <p style="color:var(--text-muted);font-size:0.9rem;">Gemiddelde invultijd: 3-5 minuten</p>
+      </div>
+      <div class="disclaimer">
+        <strong>Let op:</strong> Deze zelftest is geen medische diagnose. De uitslag geeft een indicatie van mogelijke ADHD-klachten. Raadpleeg altijd een arts of psycholoog voor een professionele beoordeling.
+      </div>
+      <button class="btn btn-primary mt-16" onclick="startQuiz()" style="width:100%">
+        Start de test
+      </button>
+    </div>
+
+    <!-- Quiz screen -->
+    <div id="screen-quiz" class="hidden">
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar" id="progress-bar" style="width:0%"></div>
+      </div>
+
+      <div class="card">
+        <div class="question-number" id="question-number">Vraag 1 van 18</div>
+        <div class="category-tag" id="category-tag">Aandacht</div>
+        <div class="question-text" id="question-text"></div>
+        <div class="answer-options" id="answer-options"></div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" id="btn-prev" onclick="prevQuestion()">Vorige</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()">Volgende</button>
+      </div>
+    </div>
+
+    <!-- Result screen -->
+    <div id="screen-result" class="hidden">
+      <div class="card" style="text-align:center;">
+        <h2>Jouw resultaat</h2>
+        <div class="result-score" id="result-score"></div>
+        <div class="result-label" id="result-label"></div>
+        <div class="result-desc" id="result-desc"></div>
+      </div>
+
+      <div class="card">
+        <h2>Uitsplitsing per categorie</h2>
+        <div class="result-breakdown" id="result-breakdown"></div>
+        <div class="disclaimer mt-16">
+          <strong>Disclaimer:</strong> Deze uitslag is uitsluitend bedoeld als persoonlijke reflectie en vervangt geen professionele diagnose. Spreek met je huisarts of een GGZ-professional als je vragen hebt over je uitslag.
+        </div>
+      </div>
+
+      <button class="btn btn-secondary mt-16" onclick="restartQuiz()" style="width:100%">
+        Opnieuw beginnen
+      </button>
+    </div>
+  </main>
+
+  <script src="/js/quiz.js"></script>
+</body>
+</html>
