@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>WK Bal Simulator</title>
+  <link rel="stylesheet" href="/css/ball.css">
+</head>
+<body>
+  <header>
+    <h1>⚽ WK Bal Simulator</h1>
+    <p>Live balbeweging via de gyroscope &amp; accelerometer van je telefoon</p>
+  </header>
+
+  <main>
+    <div id="insecure-banner" class="banner hidden">
+      ⚠️ Sensoren werken alleen via een beveiligde (HTTPS) verbinding. Open deze pagina via https:// op je iPhone om de gyroscoop te kunnen gebruiken.
+    </div>
+    <div id="unsupported-banner" class="banner hidden">
+      ⚠️ Deze browser/toestel ondersteunt geen bewegingssensoren (DeviceMotion). Probeer Safari op een iPhone.
+    </div>
+
+    <div class="card">
+      <h2>Sensoren</h2>
+      <div class="status-row">
+        <span class="status-pill" id="status-pill">⏸️ Niet actief</span>
+        <div class="btn-row" style="margin-top:0;">
+          <button class="btn" id="start-btn">Start sensoren</button>
+          <button class="btn secondary hidden" id="stop-btn">Stop</button>
+        </div>
+      </div>
+      <p class="hint">Tik op "Start sensoren" &mdash; iOS vraagt eenmalig toestemming voor beweging &amp; oriëntatie.</p>
+    </div>
+
+    <div class="card">
+      <h2>Kantelbaan</h2>
+      <div id="maze-wrap">
+        <canvas id="maze" width="300" height="300"></canvas>
+      </div>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn secondary" id="reset-ball-btn">Bal resetten</button>
+      </div>
+      <p class="hint">Houd je telefoon plat (portrait) en kantel 'm om de bal te laten rollen.</p>
+    </div>
+
+    <div class="card">
+      <h2>Telemetrie</h2>
+      <div class="telemetry-grid">
+        <div class="tele-item"><div class="label">Versnelling X</div><div class="value" id="ax">0.0</div></div>
+        <div class="tele-item"><div class="label">Versnelling Y</div><div class="value" id="ay">0.0</div></div>
+        <div class="tele-item"><div class="label">Versnelling Z</div><div class="value" id="az">0.0</div></div>
+      </div>
+      <div class="telemetry-grid">
+        <div class="tele-item"><div class="label">Rotatie α</div><div class="value" id="ra">0.0</div></div>
+        <div class="tele-item"><div class="label">Rotatie β</div><div class="value" id="rb">0.0</div></div>
+        <div class="tele-item"><div class="label">Rotatie γ</div><div class="value" id="rg">0.0</div></div>
+      </div>
+      <canvas id="accel-graph" width="400" height="70"></canvas>
+
+      <div class="spin-row">
+        <div id="spin-dial"><div class="marker"></div></div>
+        <div class="spin-stats">
+          <div class="value" id="spin-rpm">0</div>
+          <div class="label">RPM &mdash; spinsnelheid van de telefoon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Schot-detectie</h2>
+      <div class="shot-flash">
+        <div class="speed idle" id="shot-speed">Wacht op schot&hellip;</div>
+        <div class="unit" id="shot-detail"></div>
+      </div>
+      <p class="hint">Beweeg de telefoon snel (alsof je 'm wegschiet) om een schot te registreren. Snelheid is indicatief, net als bij een echte connected-ball sensor.</p>
+      <ul id="shot-log"></ul>
+    </div>
+
+    <p style="text-align:center;">
+      <a class="back-link" href="/">&larr; Terug naar Boertje</a>
+    </p>
+  </main>
+
+  <script src="/js/ball.js"></script>
+</body>
+</html>
