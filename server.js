@@ -27,6 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', require('./routes/api'));
 app.use('/api/admin', require('./routes/admin'));
 
-app.listen(PORT, () => {
-  console.log(`Smopjes draait op http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Smopjes draait op http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
