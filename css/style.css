@@ -28,7 +28,6 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
 header {
   background: var(--primary);
   color: #fff;
@@ -51,14 +50,12 @@ header p {
   margin-top: 2px;
 }
 
-/* Main layout */
 main {
   max-width: 640px;
   margin: 0 auto;
   padding: 16px;
 }
 
-/* Cards */
 .card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -76,7 +73,6 @@ main {
   border-bottom: 2px solid var(--primary-light);
 }
 
-/* Menu overview */
 .menu-overview {
   display: flex;
   flex-direction: column;
@@ -91,9 +87,7 @@ main {
   border-bottom: 1px solid var(--border);
 }
 
-.menu-item:last-child {
-  border-bottom: none;
-}
+.menu-item:last-child { border-bottom: none; }
 
 .menu-item .badge {
   background: var(--primary);
@@ -108,20 +102,10 @@ main {
 
 .menu-item .badge.vega { background: #558b2f; }
 .menu-item .badge.soup { background: #ef6c00; }
+.menu-item .meal-name { font-weight: 500; }
+.menu-item .meal-days { font-size: 0.8rem; color: var(--text-muted); }
 
-.menu-item .meal-name {
-  font-weight: 500;
-}
-
-.menu-item .meal-days {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* Name input */
-.name-section {
-  margin-bottom: 16px;
-}
+.name-section { margin-bottom: 16px; }
 
 .name-section label {
   display: block;
@@ -140,11 +124,8 @@ main {
   transition: border-color 0.2s;
 }
 
-.name-section input:focus {
-  border-color: var(--primary-light);
-}
+.name-section input:focus { border-color: var(--primary-light); }
 
-/* Day cards */
 .day-card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -161,9 +142,7 @@ main {
   font-size: 0.95rem;
 }
 
-.day-card .day-options {
-  padding: 8px 0;
-}
+.day-card .day-options { padding: 8px 0; }
 
 .radio-option {
   display: flex;
@@ -175,9 +154,7 @@ main {
   min-height: 48px;
 }
 
-.radio-option:hover {
-  background: #f1f8e9;
-}
+.radio-option:hover { background: #f1f8e9; }
 
 .radio-option input[type="radio"] {
   width: 20px;
@@ -187,24 +164,11 @@ main {
   cursor: pointer;
 }
 
-.radio-option .option-label {
-  flex: 1;
-}
+.radio-option .option-label { flex: 1; }
+.radio-option .option-name { font-weight: 500; }
+.radio-option .option-type { font-size: 0.8rem; color: var(--text-muted); }
+.radio-option + .radio-option { border-top: 1px solid var(--border); }
 
-.radio-option .option-name {
-  font-weight: 500;
-}
-
-.radio-option .option-type {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.radio-option + .radio-option {
-  border-top: 1px solid var(--border);
-}
-
-/* Buttons */
 .btn {
   display: inline-block;
   padding: 14px 24px;
@@ -218,35 +182,13 @@ main {
   text-decoration: none;
 }
 
-.btn:active {
-  transform: scale(0.98);
-}
+.btn:active { transform: scale(0.98); }
 
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-  width: 100%;
-}
+.btn-primary { background: var(--primary); color: #fff; width: 100%; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: var(--border); color: var(--text); }
+.btn-secondary:hover { background: #bdbdbd; }
 
-.btn-primary:hover {
-  background: var(--primary-dark);
-}
-
-.btn-secondary {
-  background: var(--border);
-  color: var(--text);
-}
-
-.btn-secondary:hover {
-  background: #bdbdbd;
-}
-
-.btn-danger {
-  background: var(--danger);
-  color: #fff;
-}
-
-/* Feedback messages */
 .message {
   padding: 14px 16px;
   border-radius: 8px;
@@ -254,44 +196,19 @@ main {
   font-weight: 500;
 }
 
-.message.success {
-  background: #e8f5e9;
-  color: #1b5e20;
-  border: 1px solid #a5d6a7;
-}
+.message.success { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+.message.error   { background: #ffebee; color: var(--danger); border: 1px solid #ef9a9a; }
+.message.info    { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
 
-.message.error {
-  background: #ffebee;
-  color: var(--danger);
-  border: 1px solid #ef9a9a;
-}
-
-.message.info {
-  background: #e3f2fd;
-  color: #1565c0;
-  border: 1px solid #90caf9;
-}
-
-/* No menu placeholder */
 .no-menu {
   text-align: center;
   padding: 40px 20px;
   color: var(--text-muted);
 }
 
-.no-menu .icon {
-  font-size: 3rem;
-  margin-bottom: 12px;
-}
+.no-menu .icon { font-size: 3rem; margin-bottom: 12px; }
 
-/* Admin specific */
-.admin-section {
-  margin-bottom: 24px;
-}
-
-.form-group {
-  margin-bottom: 14px;
-}
+.form-group { margin-bottom: 14px; }
 
 .form-group label {
   display: block;
@@ -312,17 +229,9 @@ main {
   transition: border-color 0.2s;
 }
 
-.form-group input:focus {
-  border-color: var(--primary-light);
-}
+.form-group input:focus { border-color: var(--primary-light); }
+.form-group .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
 
-.form-group .hint {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-/* Main dish row */
 .main-dish-row {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -372,17 +281,12 @@ main {
   color: var(--primary-dark);
 }
 
-/* Orders table */
 .orders-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-}
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
 
 th {
   background: var(--primary);
@@ -392,14 +296,8 @@ th {
   font-weight: 600;
 }
 
-td {
-  padding: 10px 8px;
-  border-bottom: 1px solid var(--border);
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
+td { padding: 10px 8px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
 
 tr.summary-row td {
   background: #f1f8e9;
@@ -408,7 +306,6 @@ tr.summary-row td {
   color: var(--primary-dark);
 }
 
-/* Week ID badge */
 .week-badge {
   display: inline-block;
   background: var(--accent);
@@ -420,7 +317,6 @@ tr.summary-row td {
   margin-bottom: 12px;
 }
 
-/* Auth status */
 .auth-status {
   font-size: 0.85rem;
   padding: 6px 12px;
@@ -428,11 +324,10 @@ tr.summary-row td {
   display: inline-block;
 }
 
-.auth-status.ok { background: #e8f5e9; color: #1b5e20; }
+.auth-status.ok   { background: #e8f5e9; color: #1b5e20; }
 .auth-status.fail { background: #ffebee; color: var(--danger); }
 
-/* Utility */
-.mt-8 { margin-top: 8px; }
+.mt-8  { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 .text-muted { color: var(--text-muted); font-size: 0.85rem; }
 .hidden { display: none !important; }

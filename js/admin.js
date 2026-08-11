@@ -11,7 +11,6 @@
     thursday: 'Donderdag', friday: 'Vrijdag',
   };
 
-  // --- Week ID ---
   function getWeekId(date) {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     const dayNum = d.getUTCDay() || 7;
@@ -23,7 +22,6 @@
 
   document.getElementById('current-week-id').textContent = getWeekId(new Date());
 
-  // --- Auth helpers ---
   function getPassword() {
     return document.getElementById('admin-password').value;
   }
@@ -35,7 +33,6 @@
     };
   }
 
-  // --- Feedback helpers ---
   function showFeedback(id, type, message) {
     const el = document.getElementById(id);
     el.className = `message ${type}`;
@@ -47,7 +44,6 @@
     document.getElementById(id).classList.add('hidden');
   }
 
-  // --- Auth test ---
   window.testAuth = async function () {
     const statusEl = document.getElementById('auth-status');
     statusEl.className = 'auth-status';
@@ -69,13 +65,9 @@
     }
   };
 
-  // Restore password from session
   const savedPw = sessionStorage.getItem('adminPassword');
-  if (savedPw) {
-    document.getElementById('admin-password').value = savedPw;
-  }
+  if (savedPw) document.getElementById('admin-password').value = savedPw;
 
-  // --- Main dish rows ---
   const NUM_MAINS = 3;
 
   function buildMainsForm() {
@@ -86,7 +78,8 @@
       row.className = 'main-dish-row';
       row.innerHTML = `
         <div class="dish-label">Gerecht ${i}</div>
-        <input type="text" id="main${i}-name" placeholder="Naam van het gerecht" style="width:100%;padding:10px 12px;font-size:1rem;border:2px solid var(--border);border-radius:8px;outline:none;">
+        <input type="text" id="main${i}-name" placeholder="Naam van het gerecht"
+          style="width:100%;padding:10px 12px;font-size:1rem;border:2px solid var(--border);border-radius:8px;outline:none;">
         <div class="day-checkboxes" id="main${i}-days">
           ${DAYS.map(d => `
             <label class="day-check">
@@ -100,7 +93,6 @@
 
   buildMainsForm();
 
-  // --- Load existing menu into form ---
   async function loadCurrentMenu() {
     try {
       const res = await fetch('/api/menu');
@@ -118,14 +110,11 @@
           if (cb) cb.checked = true;
         });
       });
-    } catch {
-      // No menu yet, leave form empty
-    }
+    } catch { /* no menu yet */ }
   }
 
   loadCurrentMenu();
 
-  // --- Save menu ---
   window.saveMenu = async function () {
     hideFeedback('menu-feedback');
 
@@ -173,7 +162,6 @@
     }
   };
 
-  // --- Load orders ---
   window.loadOrders = async function () {
     hideFeedback('orders-feedback');
     const container = document.getElementById('orders-container');
@@ -192,29 +180,27 @@
         return;
       }
 
-      const menuData = await menuRes.json();
+      const menuData   = await menuRes.json();
       const ordersData = await ordersRes.json();
-      const orders = ordersData.orders || [];
-      const menu = menuData.menu;
+      const orders     = ordersData.orders || [];
+      const menu       = menuData.menu;
 
       if (orders.length === 0) {
         container.innerHTML = '<p class="text-muted">Nog geen bestellingen deze week.</p>';
         return;
       }
 
-      // Build choice label
-      const choiceLabel = (choice) => {
+      const choiceLabel = choice => {
         if (choice === 'none') return '—';
-        if (choice === 'soup') return menu ? `Soep` : 'Soep';
-        if (choice === 'vega') return menu ? `Vega` : 'Vega';
+        if (choice === 'soup') return 'Soep';
+        if (choice === 'vega') return 'Vega';
         if (menu) {
           const main = menu.mains.find(m => m.id === choice);
-          if (main) return main.name.split(' ')[0]; // abbreviate
+          if (main) return main.name.split(' ')[0];
         }
         return choice;
       };
 
-      // Build summary counts
       const summary = {};
       DAYS.forEach(d => { summary[d.key] = {}; });
       for (const order of orders) {
@@ -224,36 +210,26 @@
         }
       }
 
-      const formatSummary = (day) => {
-        const counts = summary[day];
-        return Object.entries(counts)
-          .filter(([k]) => k !== 'none')
-          .map(([k, v]) => `${choiceLabel(k)}:${v}`)
-          .join(', ') || '—';
-      };
+      const formatSummary = day => Object.entries(summary[day])
+        .filter(([k]) => k !== 'none')
+        .map(([k, v]) => `${choiceLabel(k)}:${v}`)
+        .join(', ') || '—';
 
       let html = `<table>
-        <thead>
-          <tr>
-            <th>Naam</th>
-            ${DAYS.map(d => `<th>${d.label}</th>`).join('')}
-          </tr>
-        </thead>
-        <tbody>`;
+        <thead><tr>
+          <th>Naam</th>${DAYS.map(d => `<th>${d.label}</th>`).join('')}
+        </tr></thead><tbody>`;
 
       for (const order of orders) {
-        html += `<tr>
-          <td><strong>${escapeHtml(order.name)}</strong></td>
-          ${DAYS.map(d => `<td>${escapeHtml(choiceLabel((order.days?.[d.key]?.choice) || 'none'))}</td>`).join('')}
-        </tr>`;
+        html += `<tr><td><strong>${esc(order.name)}</strong></td>${DAYS.map(d =>
+          `<td>${esc(choiceLabel(order.days?.[d.key]?.choice ?? 'none'))}</td>`
+        ).join('')}</tr>`;
       }
 
-      html += `<tr class="summary-row">
-        <td>Totaal</td>
-        ${DAYS.map(d => `<td style="font-size:0.75rem;">${escapeHtml(formatSummary(d.key))}</td>`).join('')}
-      </tr>`;
+      html += `<tr class="summary-row"><td>Totaal</td>${DAYS.map(d =>
+        `<td style="font-size:.75rem">${esc(formatSummary(d.key))}</td>`
+      ).join('')}</tr></tbody></table>`;
 
-      html += '</tbody></table>';
       container.innerHTML = html;
     } catch {
       showFeedback('orders-feedback', 'error', 'Verbindingsfout. Probeer opnieuw.');
@@ -261,15 +237,12 @@
     }
   };
 
-  function escapeHtml(str) {
+  function esc(str) {
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Save password on input
   document.getElementById('admin-password').addEventListener('input', function () {
     sessionStorage.setItem('adminPassword', this.value);
   });

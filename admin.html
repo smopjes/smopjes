@@ -13,7 +13,6 @@
   </header>
 
   <main>
-    <!-- Auth -->
     <div class="card">
       <h2>Toegang</h2>
       <div class="form-group">
@@ -24,7 +23,6 @@
       <div id="auth-status" class="mt-8 hidden"></div>
     </div>
 
-    <!-- Set menu -->
     <div class="card">
       <h2>Menu instellen</h2>
       <div id="menu-feedback" class="hidden"></div>
@@ -49,9 +47,7 @@
         <p class="hint">Koppel elk gerecht aan de dag(en) waarop het geserveerd wordt.</p>
       </div>
 
-      <div id="mains-container">
-        <!-- Rendered by JS -->
-      </div>
+      <div id="mains-container"></div>
 
       <button class="btn btn-primary mt-16" onclick="saveMenu()">
         Menu opslaan
@@ -61,7 +57,6 @@
       </p>
     </div>
 
-    <!-- Orders -->
     <div class="card">
       <h2>Bestellingen deze week</h2>
       <button class="btn btn-secondary" onclick="loadOrders()" style="width:100%;margin-bottom:12px;">

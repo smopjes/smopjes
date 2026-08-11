@@ -51,7 +51,6 @@
     container.innerHTML = '';
 
     for (const day of DAYS) {
-      // Find which main (if any) is on this day
       const main = menu.mains.find(m => m.days.includes(day.key));
 
       const card = document.createElement('div');
@@ -62,9 +61,7 @@
       const opts = document.getElementById(`opts-${day.key}`);
       const options = [];
 
-      if (main) {
-        options.push({ value: main.id, name: main.name, type: 'Hoofdgerecht' });
-      }
+      if (main) options.push({ value: main.id, name: main.name, type: 'Hoofdgerecht' });
       options.push({ value: 'soup', name: menu.soup.name, type: 'Soep' });
       options.push({ value: 'vega', name: menu.vega.name, type: 'Vega' });
       options.push({ value: 'none', name: 'Niets', type: 'Ik bestel deze dag niet' });
